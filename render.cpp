@@ -31,6 +31,31 @@ int Render::InitializeSDL() {
     return 0;
 }
 
+bool isRunning;
+SDL_Event event;
+
+void Render::RenderLoop() {
+    isRunning = true;
+    
+    while (isRunning) {
+        // Poll events
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_QUIT) {
+                isRunning = false;
+            }
+        }
+
+        // Set background color
+        SDL_SetRenderDrawColor(renderer, 0, 128, 128, 255); // Teal
+        SDL_RenderClear(renderer);
+
+        // Draw the button with different color if hovered
+
+        // Present the rendered content
+        SDL_RenderPresent(renderer);
+    }
+}
+
 void Render::CleanUp() {
     if (renderer) SDL_DestroyRenderer(renderer);
     if (window) SDL_DestroyWindow(window);
