@@ -1,6 +1,4 @@
-#include "src/include/SDL.h"
 #include <iostream>
-
 #include "render.h"
 
 int main(int argc, char* argv[]) {
