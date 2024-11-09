@@ -1,6 +1,7 @@
 #include "src/include/SDL.h"
 #include "src/include/SDL_image.h"
 #include <iostream>
+#include <chrono>
 
 #include "render.h"
 
@@ -39,24 +40,30 @@ int Render::InitializeSDL() {
 }
 
 bool isRunning;
+bool showImage1 = true;
 SDL_Event event;
 
 void Render::RenderLoop() {
     isRunning = true;
 
-    // Load the image as a texture
-    SDL_Texture* imageTexture = IMG_LoadTexture(renderer, "src/png-transparent-spider-man-heroes-download-with-transparent-background-free-thumbnail.png");
-    if (!imageTexture) {
+    // Load the images as textures
+    SDL_Texture* imageTexture1 = IMG_LoadTexture(renderer, "src/png-transparent-spider-man-heroes-download-with-transparent-background-free-thumbnail.png");
+    SDL_Texture* imageTexture2 = IMG_LoadTexture(renderer, "src/images.jpg");
+
+    if (!imageTexture1 || !imageTexture2) {
         std::cerr << "IMG_LoadTexture Error: " << IMG_GetError() << std::endl;
         return;
     }
 
-    // Get the width and height of the texture for positioning
+    // Get the width and height of the textures
     int textureWidth, textureHeight;
-    SDL_QueryTexture(imageTexture, NULL, NULL, &textureWidth, &textureHeight);
+    SDL_QueryTexture(imageTexture1, NULL, NULL, &textureWidth, &textureHeight);
 
-    // Define a destination rectangle where the texture will be drawn on the screen
     SDL_Rect dstRect = {100, 100, textureWidth, textureHeight};
+
+    // Variables to control texture switching
+    auto lastToggleTime = std::chrono::high_resolution_clock::now();
+    int toggleInterval = 500; // milliseconds
 
     // Render loop
     while (isRunning) {
@@ -67,29 +74,39 @@ void Render::RenderLoop() {
             }
         }
 
+        // Calculate elapsed time
+        auto currentTime = std::chrono::high_resolution_clock::now();
+        auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastToggleTime).count();
+
+        // Toggle between textures based on the interval
+        if (elapsedTime >= toggleInterval) {
+            showImage1 = !showImage1;
+            lastToggleTime = currentTime; // reset the timer
+        }
+
         // Set background color
-        SDL_SetRenderDrawColor(renderer, 0, 128, 128, 255); // Teal
+        SDL_SetRenderDrawColor(renderer, 0, 128, 128, 255);
         SDL_RenderClear(renderer);
 
-        // Render the image texture to the screen
-        SDL_RenderCopy(renderer, imageTexture, NULL, &dstRect);
+        // Render the appropriate texture based on `showImage1`
+        if (showImage1) {
+            SDL_RenderCopy(renderer, imageTexture1, NULL, &dstRect);
+        } else {
+            SDL_RenderCopy(renderer, imageTexture2, NULL, &dstRect);
+        }
 
         // Present the rendered content on the screen
         SDL_RenderPresent(renderer);
     }
 
-    // Free the texture once we're done with it
-    SDL_DestroyTexture(imageTexture);
+    // Free textures once we're done
+    SDL_DestroyTexture(imageTexture1);
+    SDL_DestroyTexture(imageTexture2);
 }
 
 void Render::CleanUp() {
-    if (renderer) {
-        SDL_DestroyRenderer(renderer);
-    } 
-    if (window) {
-        SDL_DestroyWindow(window);
-    } 
-    
+    if (renderer) SDL_DestroyRenderer(renderer);
+    if (window) SDL_DestroyWindow(window);
     IMG_Quit();
     SDL_Quit();
 }
