@@ -8,8 +8,6 @@ extern  SDL_Window* window;
 extern  SDL_Renderer* renderer;
 extern bool isRunning;
 extern SDL_Event event;
-extern SDL_Texture* imageTexture1;
-extern SDL_Texture* imageTexture2;
 
 namespace Render {
     int InitializeSDL();

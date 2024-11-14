@@ -52,6 +52,8 @@ int toggleInterval;
 //SDL
 SDL_Event event;
 SDL_Rect dstRect;
+SDL_Texture* imageTexture1;
+SDL_Texture* imageTexture2;
 
 void CheckTextures() {
     if (!imageTexture1 || !imageTexture2) {
@@ -75,8 +77,8 @@ void Render::RenderLoop() {
     isRunning = true;
 
     // Load the images as textures
-    imageTexture1 = IMG_LoadTexture(renderer, "src/png-transparent-spider-man-heroes-download-with-transparent-background-free-thumbnail.png");
-    imageTexture2 = IMG_LoadTexture(renderer, "src/images.jpg");
+    imageTexture1 = IMG_LoadTexture(renderer, "src/Player-idle.png");
+    imageTexture2 = IMG_LoadTexture(renderer, "src/Player-idle.png");
 
     CheckTextures();
 
