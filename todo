@@ -1,1 +1,1 @@
-Make sure that the pixels of assets aka the player are the same as the rectangle of the player, as to not create too big of a hitbox
+Make sure that the pixels of assets aka the player are the same as the rectangle of the player, as to not create too big of a hitbox - done
