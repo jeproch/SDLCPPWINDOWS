@@ -1,7 +1,8 @@
 #ifndef RENDER_H
 #define RENDER_H
 
-#include "src/include/SDL.h"
+#include "./SDL.h" 
+#include "./SDL_image.h"
 #include <string>
 
 extern  SDL_Window* window;

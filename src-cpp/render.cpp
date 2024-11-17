@@ -1,5 +1,5 @@
-#include "src/include/SDL.h"
-#include "src/include/SDL_image.h"
+#include "./SDL.h" //src\include\SDL.h
+#include "./SDL_image.h"
 #include <iostream>
 #include <chrono>
 

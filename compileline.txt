@@ -1,1 +1,1 @@
-g++ main.cpp render.cpp -o main.exe -I"src\include" -L"src\lib\x64" -lSDL2main -lSDL2 -lSDL2_image
+g++ src-cpp/*.cpp -o main.exe -I"src\include" -L"src\lib\x64" -lSDL2main -lSDL2 -lSDL2_image
