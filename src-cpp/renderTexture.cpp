@@ -1,4 +1,5 @@
 #include "render.h"
+#include "map.h"
 #include <iostream>
 #include <chrono>
 
@@ -55,15 +56,19 @@ void Render::DeterminePlayerTexture() {
         // Render specific textures based on the key pressed
         switch (playerState) {
             case PlayerState::MovingW:
+        
                 SDL_RenderCopy(renderer, imageTextureW, NULL, &dstRect);
                 break;
             case PlayerState::MovingA:
+                
                 SDL_RenderCopy(renderer, imageTextureA, NULL, &dstRect);
                 break;
             case PlayerState::MovingS:
+                
                 SDL_RenderCopy(renderer, imageTextureS, NULL, &dstRect);
                 break;
             case PlayerState::MovingD:
+                
                 SDL_RenderCopy(renderer, imageTextureD, NULL, &dstRect);
                 break;
             default:

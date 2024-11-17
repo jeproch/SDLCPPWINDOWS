@@ -4,6 +4,7 @@
 #include <chrono>
 
 #include "render.h"
+#include "map.h"
 
 // Define global SDL pointers
 SDL_Window* window = nullptr;
@@ -24,7 +25,7 @@ int Render::InitializeSDL() {
     }
 
     // Create SDL window
-    window = SDL_CreateWindow("SDL Image Example", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1200, 600, SDL_WINDOW_SHOWN);
+    window = SDL_CreateWindow("SDL Image Example", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 576, SDL_WINDOW_SHOWN);
     if (!window) {
         std::cerr << "SDL Window Creation Error: " << SDL_GetError() << std::endl;
         IMG_Quit();
@@ -115,7 +116,7 @@ void Render::RenderLoop() {
     
     SDL_QueryTexture(imageTexture1, NULL, NULL, &textureWidth, &textureHeight);
 
-    dstRect = {100, 100, textureWidth, textureHeight};
+    dstRect = {SCREEN_WIDTH/16, SCREEN_HEIGHT/9, textureWidth, textureHeight};
 
     // Variables to control texture switching
 
@@ -145,6 +146,7 @@ void Render::RenderLoop() {
 
         // Set background color
         Render::SetBackgroundColour(0,128,128,255);            // SDL_SetRenderDrawColor(renderer, 0, 128, 128, 255);
+        Map::DrawMap(renderer);
         Keyboard::ReadKeyboardInput();
         Render::DeterminePlayerTexture();
         // DEBUG std::cout << "Player width: " << dstRect.w << " Player height: " << dstRect.h << std::endl;

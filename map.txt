@@ -1,0 +1,12 @@
+Some information on the game's map
+
+Aspect ratio 16:9
+
+horizontal: 16×64=1024 pixels (width).
+verical: 9×64=576 pixels (height).
+
+CONSTANTS 
+
+const int SCREEN_WIDTH = 1024;
+const int SCREEN_HEIGHT = 576;
+const int TILE_SIZE = 64;
