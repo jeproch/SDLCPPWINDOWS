@@ -48,17 +48,35 @@ int Render::InitializeSDL() {
 bool isRunning;
 bool showImage1 = true;
 int textureWidth, textureHeight;
-int toggleInterval;
-auto lastToggleTime = std::chrono::high_resolution_clock::now();
-auto currentTime = std::chrono::high_resolution_clock::now();
+
 //SDL
 SDL_Event event;
 SDL_Rect dstRect;
 SDL_Texture* imageTexture1;
 SDL_Texture* imageTexture2;
+SDL_Texture* imageTextureW;
+SDL_Texture* imageTextureA;
+SDL_Texture* imageTextureS;
+SDL_Texture* imageTextureD;
 
 void CheckTextures() {
     if (!imageTexture1 || !imageTexture2) {
+        std::cerr << "IMG_LoadTexture Error: " << IMG_GetError() << std::endl;
+        return;
+    }
+    if (!imageTextureA) {
+        std::cerr << "IMG_LoadTexture Error: " << IMG_GetError() << std::endl;
+        return;
+    }
+    if (!imageTextureD) {
+        std::cerr << "IMG_LoadTexture Error: " << IMG_GetError() << std::endl;
+        return;
+    }
+    if (!imageTextureS) {
+        std::cerr << "IMG_LoadTexture Error: " << IMG_GetError() << std::endl;
+        return;
+    }
+    if (!imageTextureW) {
         std::cerr << "IMG_LoadTexture Error: " << IMG_GetError() << std::endl;
         return;
     }
@@ -73,28 +91,10 @@ void Render::SetBackgroundColour(int r, int g, int b, int a) {
 void Render::FreeTextures() {
     SDL_DestroyTexture(imageTexture1);
     SDL_DestroyTexture(imageTexture2);
-}
-
-void Render::DeterminePlayerTexture() {
-    //this is to simplify the process of determining which texture the player should have
-    //this snippet will be added to an if statement checking events from the keyboard to determine texture
-    // Calculate elapsed time 
-        auto currentTime = std::chrono::high_resolution_clock::now();
-        auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastToggleTime).count();
-
-        // Toggle between textures based on the interval
-        if (elapsedTime >= toggleInterval) {
-            showImage1 = !showImage1;
-            lastToggleTime = currentTime; // reset the timer
-        }
-
-        // Render the appropriate texture based on `showImage1`
-        if (showImage1) {
-            SDL_RenderCopy(renderer, imageTexture1, NULL, &dstRect);
-        } else {
-            SDL_RenderCopy(renderer, imageTexture2, NULL, &dstRect);
-        }
-
+    SDL_DestroyTexture(imageTextureW);
+    SDL_DestroyTexture(imageTextureA);
+    SDL_DestroyTexture(imageTextureS);
+    SDL_DestroyTexture(imageTextureD);
 }
 
 void Render::RenderLoop() {
@@ -103,6 +103,11 @@ void Render::RenderLoop() {
     // Load the images as textures
     imageTexture1 = IMG_LoadTexture(renderer, "src/Player-idle1.png");
     imageTexture2 = IMG_LoadTexture(renderer, "src/Player-idle2.png");
+
+    imageTextureA = IMG_LoadTexture(renderer, "src/Player-a.png");
+    imageTextureD = IMG_LoadTexture(renderer, "src/Player-d.png");
+    imageTextureS = IMG_LoadTexture(renderer, "src/Player-s.png");
+    imageTextureW = IMG_LoadTexture(renderer, "src/Player-w.png");
 
     CheckTextures();
 
@@ -113,8 +118,6 @@ void Render::RenderLoop() {
     dstRect = {100, 100, textureWidth, textureHeight};
 
     // Variables to control texture switching
-    auto lastToggleTime = std::chrono::high_resolution_clock::now();
-    toggleInterval = 500; // milliseconds
 
     // Render loop
     while (isRunning) {
@@ -123,13 +126,28 @@ void Render::RenderLoop() {
             if (event.type == SDL_QUIT) {
                 isRunning = false;
             }
+            //make a function that checks the input for the keyboard to move the player texture/rectangle
+
+            // SDL_Event event;
+            // while(SDL_PollEvent(&event))
+            // {
+            //     switch(event.type)
+            //     {
+            //         case SDL_KEYDOWN:
+            //             keyboard[event.key.keysym.sym] = false;
+            //         break;
+            //         case SDL_KEYUP:
+            //             keyboard[event.key.keysym.sym] = true;
+            //         break;
+            //     }       
+            // }
         }
 
         // Set background color
         Render::SetBackgroundColour(0,128,128,255);            // SDL_SetRenderDrawColor(renderer, 0, 128, 128, 255);
-
+        Keyboard::ReadKeyboardInput();
         Render::DeterminePlayerTexture();
-        std::cout << "Player width: " << dstRect.w << " Player height: " << dstRect.h << std::endl;
+        // DEBUG std::cout << "Player width: " << dstRect.w << " Player height: " << dstRect.h << std::endl;
 
         // Present the rendered content on the screen
         SDL_RenderPresent(renderer);
