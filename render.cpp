@@ -49,6 +49,8 @@ bool isRunning;
 bool showImage1 = true;
 int textureWidth, textureHeight;
 int toggleInterval;
+auto lastToggleTime = std::chrono::high_resolution_clock::now();
+auto currentTime = std::chrono::high_resolution_clock::now();
 //SDL
 SDL_Event event;
 SDL_Rect dstRect;
@@ -73,12 +75,34 @@ void Render::FreeTextures() {
     SDL_DestroyTexture(imageTexture2);
 }
 
+void Render::DeterminePlayerTexture() {
+    //this is to simplify the process of determining which texture the player should have
+    //this snippet will be added to an if statement checking events from the keyboard to determine texture
+    // Calculate elapsed time 
+        auto currentTime = std::chrono::high_resolution_clock::now();
+        auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastToggleTime).count();
+
+        // Toggle between textures based on the interval
+        if (elapsedTime >= toggleInterval) {
+            showImage1 = !showImage1;
+            lastToggleTime = currentTime; // reset the timer
+        }
+
+        // Render the appropriate texture based on `showImage1`
+        if (showImage1) {
+            SDL_RenderCopy(renderer, imageTexture1, NULL, &dstRect);
+        } else {
+            SDL_RenderCopy(renderer, imageTexture2, NULL, &dstRect);
+        }
+
+}
+
 void Render::RenderLoop() {
     isRunning = true;
 
     // Load the images as textures
-    imageTexture1 = IMG_LoadTexture(renderer, "src/Player-idle.png");
-    imageTexture2 = IMG_LoadTexture(renderer, "src/Player-idle.png");
+    imageTexture1 = IMG_LoadTexture(renderer, "src/Player-idle1.png");
+    imageTexture2 = IMG_LoadTexture(renderer, "src/Player-idle2.png");
 
     CheckTextures();
 
@@ -101,25 +125,10 @@ void Render::RenderLoop() {
             }
         }
 
-        // Calculate elapsed time
-        auto currentTime = std::chrono::high_resolution_clock::now();
-        auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastToggleTime).count();
-
-        // Toggle between textures based on the interval
-        if (elapsedTime >= toggleInterval) {
-            showImage1 = !showImage1;
-            lastToggleTime = currentTime; // reset the timer
-        }
-
         // Set background color
         Render::SetBackgroundColour(0,128,128,255);            // SDL_SetRenderDrawColor(renderer, 0, 128, 128, 255);
 
-        // Render the appropriate texture based on `showImage1`
-        if (showImage1) {
-            SDL_RenderCopy(renderer, imageTexture1, NULL, &dstRect);
-        } else {
-            SDL_RenderCopy(renderer, imageTexture2, NULL, &dstRect);
-        }
+        Render::DeterminePlayerTexture();
 
         // Present the rendered content on the screen
         SDL_RenderPresent(renderer);

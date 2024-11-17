@@ -15,6 +15,7 @@ namespace Render {
     void RenderLoop();
     void SetBackgroundColour(int r, int g, int b, int a);
     void FreeTextures();
+    void DeterminePlayerTexture();
 }
 
 #endif
