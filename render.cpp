@@ -129,6 +129,7 @@ void Render::RenderLoop() {
         Render::SetBackgroundColour(0,128,128,255);            // SDL_SetRenderDrawColor(renderer, 0, 128, 128, 255);
 
         Render::DeterminePlayerTexture();
+        std::cout << "Player width: " << dstRect.w << " Player height: " << dstRect.h << std::endl;
 
         // Present the rendered content on the screen
         SDL_RenderPresent(renderer);
