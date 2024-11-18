@@ -16,10 +16,10 @@ enum class PlayerState {
 };
 
 PlayerState playerState = PlayerState::Idle;
+const Uint8* keyboardState = SDL_GetKeyboardState(NULL);
 
 void Keyboard::ReadKeyboardInput() {
-    const Uint8* keyboardState = SDL_GetKeyboardState(NULL);
-
+    
     // Update player state based on key press
     if (keyboardState[SDL_SCANCODE_W]) {
         playerState = PlayerState::MovingW;

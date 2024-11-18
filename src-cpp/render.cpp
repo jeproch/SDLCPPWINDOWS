@@ -5,6 +5,7 @@
 
 #include "render.h"
 #include "map.h"
+#include "movement.h"
 
 // Define global SDL pointers
 SDL_Window* window = nullptr;
@@ -148,6 +149,7 @@ void Render::RenderLoop() {
         Render::SetBackgroundColour(0,128,128,255);            // SDL_SetRenderDrawColor(renderer, 0, 128, 128, 255);
         Map::DrawMap(renderer);
         Keyboard::ReadKeyboardInput();
+        Movement::PlayerMove();
         Render::DeterminePlayerTexture();
         // DEBUG std::cout << "Player width: " << dstRect.w << " Player height: " << dstRect.h << std::endl;
 

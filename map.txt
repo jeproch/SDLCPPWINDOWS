@@ -10,3 +10,8 @@ CONSTANTS
 const int SCREEN_WIDTH = 1024;
 const int SCREEN_HEIGHT = 576;
 const int TILE_SIZE = 64;
+
+COLLISIONS
+
+Before each movements make sure the movement of the rectangle only is called if the coordinate of the next position isn't the same 
+as a tile which is red 

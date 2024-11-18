@@ -17,7 +17,6 @@ extern SDL_Texture* imageTextureD;
 extern SDL_Texture* imageTextureS;
 extern SDL_Texture* imageTextureW;
 
-
 extern SDL_Rect dstRect;
 extern SDL_Event event;
 
