@@ -38,7 +38,7 @@ void Map::DrawMap(SDL_Renderer* renderer) {
             // Set color based on the tile value
             if (map[i][j] == 1) {
                 SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Red for 1
-            } else {
+            } else if (map[i][j] == 0) {
                 SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); // Green for 0
             }
 
