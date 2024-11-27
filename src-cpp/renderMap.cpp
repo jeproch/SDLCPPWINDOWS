@@ -39,7 +39,7 @@ void Map::DrawMap(SDL_Renderer* renderer) {
             if (map[i][j] == 1) {
                 SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Red for 1
             } else if (map[i][j] == 0) {
-                SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); // Green for 0
+                SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255); // Green for 0
             }
 
             // Render the rectangle
