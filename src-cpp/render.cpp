@@ -117,7 +117,7 @@ void Render::RenderLoop() {
     
     SDL_QueryTexture(imageTexture1, NULL, NULL, &textureWidth, &textureHeight);
 
-    dstRect = {SCREEN_WIDTH/16, SCREEN_HEIGHT/9, textureWidth, textureHeight};
+    dstRect = {SCREEN_WIDTH / 16, SCREEN_HEIGHT / 9, textureWidth, textureHeight}; //ratio 16:9
 
     // Variables to control texture switching
 
@@ -128,21 +128,6 @@ void Render::RenderLoop() {
             if (event.type == SDL_QUIT) {
                 isRunning = false;
             }
-            //make a function that checks the input for the keyboard to move the player texture/rectangle
-
-            // SDL_Event event;
-            // while(SDL_PollEvent(&event))
-            // {
-            //     switch(event.type)
-            //     {
-            //         case SDL_KEYDOWN:
-            //             keyboard[event.key.keysym.sym] = false;
-            //         break;
-            //         case SDL_KEYUP:
-            //             keyboard[event.key.keysym.sym] = true;
-            //         break;
-            //     }       
-            // }
         }
 
         // Set background color
