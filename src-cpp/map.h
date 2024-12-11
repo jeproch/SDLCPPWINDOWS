@@ -10,7 +10,7 @@ extern const int SCREEN_HEIGHT; // 64 * 9
 extern const int MAP_HEIGHT;
 extern const int MAP_WIDTH;
 extern const int TILE_SIZE; // Size of each tile in pixels
-extern int map[9][16];
+extern int map[18][32];
 
 namespace Map {
     void DrawMap(SDL_Renderer* renderer);

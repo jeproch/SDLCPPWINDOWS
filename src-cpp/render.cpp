@@ -86,7 +86,6 @@ void CheckTextures() {
 
 void Render::SetBackgroundColour(int r, int g, int b, int a) {
     SDL_SetRenderDrawColor(renderer, r, g, b, a);
-    // SDL_SetRenderDrawColor(renderer, 0, 128, 128, 255);
     SDL_RenderClear(renderer);
 }
 
@@ -136,8 +135,7 @@ void Render::RenderLoop() {
         Keyboard::ReadKeyboardInput();
         Movement::PlayerMove();
         Render::DeterminePlayerTexture();
-        // DEBUG std::cout << "Player width: " << dstRect.w << " Player height: " << dstRect.h << std::endl;
-
+        
         // Present the rendered content on the screen
         SDL_RenderPresent(renderer);
     }
