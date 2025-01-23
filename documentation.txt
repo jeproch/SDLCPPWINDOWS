@@ -1,0 +1,2 @@
+dstRect - this is the rectangle drawn to make the "player"
+        - don't ask why this is the name, I'm just too lazy to change it
